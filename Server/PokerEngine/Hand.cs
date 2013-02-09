@@ -2,51 +2,77 @@ namespace PokerEngine
 {
     public class Hand
     {
+        private int _pot;
+        private IPlayOneCardPoker _blind, _button;
+        private string _blindCard, _buttonCard;
+
         public Hand(IPlayOneCardPoker blind, IPlayOneCardPoker button, IRandomiseCards deck)
         {
-            var blindCard = deck.Next();
-            var buttonCard = deck.Next();
+            _blind = blind;
+            _button = button;
+            _blindCard = deck.Next();
+            _buttonCard = deck.Next();
 
-            blind.ReceiveCard(blindCard);
-            button.ReceiveCard(buttonCard);
+            Deal();
+            PostBlinds();
 
-            blind.PostBlind();
-            int pot = 1;
-
-            var buttonAction = button.GetAction();
-            blind.OpponentsAction(buttonAction);
+            var buttonAction = _button.GetAction();
+            _blind.OpponentsAction(buttonAction);
 
             if (buttonAction == "FOLD")
             {
-                blind.ReceiveChips(pot);
+                BlindWins();
                 return;
             }
 
-            pot+=1;
+            _pot+=1;
 
-            var blindAction = blind.GetAction();
-            button.OpponentsAction(blindAction);
+            var blindAction = _blind.GetAction();
+            _button.OpponentsAction(blindAction);
 
             if (blindAction == "CALL")
             {
-                if (ranks.IndexOf(blindCard) > ranks.IndexOf(buttonCard))
-                    blind.ReceiveChips(pot);
-                else
-                    button.ReceiveChips(pot);
-
+                ShowDown();
                 return;
             }
 
-            pot+=1;
+            _pot+=1;
 
             if (buttonAction == "CALL")
-                blind.ReceiveChips(pot);
+                BlindWins();
         }
 
-        string ranks = "2A";
-
-        private static void DealCards(IPlayOneCardPoker blind, IPlayOneCardPoker button, IRandomiseCards deck)
+        private void PostBlinds()
         {
+            _blind.PostBlind();
+            _pot = 1;
         }
+
+        private void Deal()
+        {
+            _blind.ReceiveCard(_blindCard);
+            _button.ReceiveCard(_buttonCard);
+        }
+
+        private void BlindWins()
+        {
+            _blind.ReceiveChips(_pot);
+        }
+
+        private void ButtonWins()
+        {
+            _button.ReceiveChips(_pot);
+        }
+
+        private void ShowDown()
+        {
+            if (ranks.IndexOf(_blindCard) > ranks.IndexOf(_buttonCard))
+                BlindWins();
+            else
+                ButtonWins();
+        }
+
+        private const string ranks = "2A";
+
     }
 }
