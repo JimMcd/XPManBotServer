@@ -9,5 +9,9 @@ namespace PokerEngine.Tests.Fakes
         public void PostBlind()
         {
         }
+
+        public void SendStartingChips(int chips)
+        {
+        }
     }
 }

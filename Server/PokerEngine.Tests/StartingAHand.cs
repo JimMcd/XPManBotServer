@@ -57,5 +57,9 @@ namespace PokerEngine.Tests
         {
             _postedBlind = true;
         }
+
+        public void SendStartingChips(int chips)
+        {
+        }
     }
 }

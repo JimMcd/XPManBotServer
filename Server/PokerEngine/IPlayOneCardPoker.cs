@@ -4,5 +4,6 @@ namespace PokerEngine
     {
         void ReceiveCard(string card);
         void PostBlind();
+        void SendStartingChips(int chips);
     }
 }
