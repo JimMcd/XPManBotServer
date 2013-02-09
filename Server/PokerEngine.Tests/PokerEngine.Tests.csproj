@@ -43,11 +43,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PlayingAHand.cs" />
+    <Compile Include="Fakes\FakeDeck.cs" />
+    <Compile Include="Fakes\FakePlayer.cs" />
+    <Compile Include="StartingAHand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PokerEngine\PokerEngine.csproj">
+      <Project>{BF83A545-C6D4-44E6-A7FD-710ACFC0A443}</Project>
+      <Name>PokerEngine</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

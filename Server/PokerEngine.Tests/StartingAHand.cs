@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using PokerEngine.Tests.Fakes;
 
 namespace PokerEngine.Tests
 {
     [TestFixture]
-    public class PlayingAHand : IPlayOneCardPoker
+    public class StartingAHand : IPlayOneCardPoker
     {
         private string _dealtCard;
         private bool _postedBlind;
@@ -56,56 +56,6 @@ namespace PokerEngine.Tests
         public void PostBlind()
         {
             _postedBlind = true;
-        }
-    }
-
-    public class FakeDeck : IRandomiseCards
-    {
-        private List<string> _cards;
-        private int _drawn = 0;
-
-        public FakeDeck(params string[] cards)
-        {
-            _cards = new List<string>(cards);
-        }
-
-        public string Next()
-        {
-            _drawn++;
-            return _cards[_drawn - 1];
-        }
-    }
-
-    public interface IRandomiseCards
-    {
-        string Next();
-    }
-
-    public class Hand
-    {
-        public Hand(IPlayOneCardPoker p1, IPlayOneCardPoker p2, IRandomiseCards deck)
-        {
-            p1.ReceiveCard(deck.Next());
-            p2.ReceiveCard(deck.Next());
-
-            p1.PostBlind();
-        }
-    }
-
-    public interface IPlayOneCardPoker
-    {
-        void ReceiveCard(string card);
-        void PostBlind();
-    }
-
-    public class FakePlayer : IPlayOneCardPoker
-    {
-        public void ReceiveCard(string card)
-        {
-        }
-
-        public void PostBlind()
-        {
         }
     }
 }
