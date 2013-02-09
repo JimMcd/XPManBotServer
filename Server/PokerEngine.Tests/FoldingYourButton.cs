@@ -4,55 +4,24 @@ using PokerEngine.Tests.Fakes;
 namespace PokerEngine.Tests
 {
     [TestFixture]
-    public class FoldingYourButton : IPlayOneCardPoker
+    public class FoldingYourButton
     {
-        private string _opponentsAction;
-        private int _chipsReceived;
-
         [Test]
         public void told_that_the_opponent_folded()
         {
-            var hand = new Hand(this, new AlwaysFolds(), new FakeDeck("A", "2"));
+            var hero = new FakePlayer();
+            var hand = new Hand(hero, new AlwaysFolds(), new FakeDeck("A", "2"));
 
-            Assert.That(_opponentsAction, Is.EqualTo("FOLD"));
+            Assert.That(hero.ReceivedOpponentsAction, Is.EqualTo("FOLD"));
         }
 
         [Test]
         public void receives_one_chip_for_winning()
         {
-            var hand = new Hand(this, new AlwaysFolds(), new FakeDeck("A", "2"));
+            var hero = new FakePlayer();
+            var hand = new Hand(hero, new AlwaysFolds(), new FakeDeck("A", "2"));
 
-            Assert.That(_chipsReceived, Is.EqualTo(1));
-        }
-
-        public void ReceiveCard(string card)
-        {
-
-        }
-
-        public void PostBlind()
-        {
-
-        }
-
-        public void SendStartingChips(int chips)
-        {
-            
-        }
-
-        public string GetAction()
-        {
-            return string.Empty;
-        }
-
-        public void OpponentsAction(string action)
-        {
-            _opponentsAction = action;
-        }
-
-        public void ReceiveChips(int amount)
-        {
-            _chipsReceived = amount;
+            Assert.That(hero.ReceivedChipAmount, Is.EqualTo(1));
         }
     }
 
