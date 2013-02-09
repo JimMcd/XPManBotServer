@@ -3,6 +3,7 @@
 namespace Server.Tests
 {
     [TestFixture]
+    [Ignore]
     public class finding_bots_to_load
     {
         [Test]

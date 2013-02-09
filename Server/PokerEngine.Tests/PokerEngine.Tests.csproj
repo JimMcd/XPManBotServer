@@ -43,8 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlwaysRaises.cs" />
     <Compile Include="Fakes\FakeDeck.cs" />
     <Compile Include="Fakes\FakePlayer.cs" />
+    <Compile Include="FoldingYourBlind.cs" />
     <Compile Include="FoldingYourButton.cs" />
     <Compile Include="StartingAGame.cs" />
     <Compile Include="StartingAHand.cs" />

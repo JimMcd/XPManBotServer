@@ -3,6 +3,7 @@
 namespace Server.Tests
 {
     [TestFixture]
+    [Ignore]
     public class will_load_bot_from_name
     {
         [Test]

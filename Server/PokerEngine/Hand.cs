@@ -9,8 +9,13 @@ namespace PokerEngine
 
             blind.PostBlind();
 
-            blind.OpponentsAction(button.GetAction());
-            blind.ReceiveChips(1);
+            var buttonAction = button.GetAction();
+            blind.OpponentsAction(buttonAction);
+            var blindAction = blind.GetAction();
+            button.OpponentsAction(blindAction);
+
+            if (blindAction != "FOLD")
+                blind.ReceiveChips(1);
         }
     }
 }
