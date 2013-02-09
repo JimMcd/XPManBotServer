@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
@@ -18,21 +20,9 @@ namespace Server.Tests
             var bot = new Bot(botname);
 
             var result = bot.GetMessage();
+            result = bot.GetMessage();
 
             Assert.That(result, Is.EqualTo("Hello Server"));
-        }
-    }
-
-    public class Bot
-    {
-        public Bot(string botname)
-        {
-            
-        }
-
-        public string GetMessage()
-        {
-            return "";
         }
     }
 }
