@@ -1,7 +1,12 @@
+using System.Collections.Generic;
+
 namespace PokerEngine.Tests.Fakes
 {
     public class FakePlayer : IPlayOneCardPoker
     {
+        private List<string> _actions = new List<string>();
+        private int _actionIndex = 0;
+
         public string ReceivedCard { get; set; }
         public string ReceivedOpponentsAction { get; set; }
         public int StartingChips { get; set; }
@@ -25,6 +30,12 @@ namespace PokerEngine.Tests.Fakes
 
         public string GetAction()
         {
+            _actionIndex++;
+            int index = _actionIndex - 1;
+            if (_actions.Count > index)
+                return _actions[index];
+
+
             return string.Empty;
         }
 
@@ -36,6 +47,11 @@ namespace PokerEngine.Tests.Fakes
         public void ReceiveChips(int amount)
         {
             ReceivedChipAmount = amount;
+        }
+
+        public void Will(params string [] actions)
+        {
+            _actions = new List<string>(actions);
         }
     }
 }

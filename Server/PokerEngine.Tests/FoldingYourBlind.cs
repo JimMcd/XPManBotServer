@@ -17,10 +17,10 @@ namespace PokerEngine.Tests
         public void get_prompted_for_action_when_opponent_raises()
         {
             var hand = new Hand(this, new AlwaysRaises(), new FakeDeck("A", "2"));
-            
+
             Assert.That(_actionSent, Is.EqualTo(true));
         }
-        
+
         [Test]
         public void dont_receive_chips()
         {

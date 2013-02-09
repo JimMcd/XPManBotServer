@@ -48,6 +48,8 @@
     <Compile Include="Fakes\FakePlayer.cs" />
     <Compile Include="FoldingYourBlind.cs" />
     <Compile Include="FoldingYourButton.cs" />
+    <Compile Include="RaisingBlindToButtonsCall.cs" />
+    <Compile Include="ShowdownWithCallCall.cs" />
     <Compile Include="StartingAGame.cs" />
     <Compile Include="StartingAHand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
