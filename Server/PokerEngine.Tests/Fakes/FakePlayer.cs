@@ -2,10 +2,11 @@ namespace PokerEngine.Tests.Fakes
 {
     public class FakePlayer : IPlayOneCardPoker
     {
-        private string ReceivedCard { get; set; }
-        private string ReceivedOpponentsAction { get; set; }
-        private int StartingChips { get; set; }
-        private int ReceivedChipAmount { get; set; }
+        public string ReceivedCard { get; set; }
+        public string ReceivedOpponentsAction { get; set; }
+        public int StartingChips { get; set; }
+        public int ReceivedChipAmount { get; set; }
+        public bool PostedBlind { get; set; }
 
         public void ReceiveCard(string card)
         {
@@ -14,6 +15,7 @@ namespace PokerEngine.Tests.Fakes
 
         public void PostBlind()
         {
+            PostedBlind = true;
         }
 
         public void SendStartingChips(int chips)
