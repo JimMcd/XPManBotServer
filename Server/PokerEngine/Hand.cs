@@ -4,7 +4,11 @@ namespace PokerEngine
     {
         public Hand(IPlayOneCardPoker blind, IPlayOneCardPoker button, IRandomiseCards deck)
         {
-            DealCards(blind, button, deck);
+            var blindCard = deck.Next();
+            var buttonCard = deck.Next();
+
+            blind.ReceiveCard(blindCard);
+            button.ReceiveCard(buttonCard);
 
             blind.PostBlind();
             int pot = 1;
@@ -25,7 +29,11 @@ namespace PokerEngine
 
             if (blindAction == "CALL")
             {
-                blind.ReceiveChips(pot);
+                if (ranks.IndexOf(blindCard) > ranks.IndexOf(buttonCard))
+                    blind.ReceiveChips(pot);
+                else
+                    button.ReceiveChips(pot);
+
                 return;
             }
 
@@ -35,10 +43,10 @@ namespace PokerEngine
                 blind.ReceiveChips(pot);
         }
 
+        string ranks = "2A";
+
         private static void DealCards(IPlayOneCardPoker blind, IPlayOneCardPoker button, IRandomiseCards deck)
         {
-            blind.ReceiveCard(deck.Next());
-            button.ReceiveCard(deck.Next());
         }
     }
 }

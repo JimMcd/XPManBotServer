@@ -20,7 +20,7 @@ namespace PokerEngine.Tests
         }
 
         [Test]
-        public void hero_does_not_get_chips_with_worst_card()
+        public void villain_gets_chips_with_best_card()
         {
             var hero = new FakePlayer();
             var villain = new FakePlayer();
@@ -29,7 +29,7 @@ namespace PokerEngine.Tests
 
             var hand = new Hand(hero, villain, new FakeDeck("2", "A"));
 
-            Assert.That(hero.ReceivedChipAmount, Is.EqualTo(0));
+            Assert.That(villain.ReceivedChipAmount, Is.EqualTo(2));
         }
 
 
