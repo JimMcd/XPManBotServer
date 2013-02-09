@@ -7,5 +7,6 @@ namespace PokerEngine
         void SendStartingChips(int chips);
         string GetAction();
         void OpponentsAction(string action);
+        void ReceiveChips(int amount);
     }
 }

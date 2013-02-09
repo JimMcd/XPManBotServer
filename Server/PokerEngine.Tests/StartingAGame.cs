@@ -50,7 +50,10 @@ namespace PokerEngine.Tests
 
         public void OpponentsAction(string action)
         {
-            throw new System.NotImplementedException();
+        }
+
+        public void ReceiveChips(int amount)
+        {
         }
     }
 }

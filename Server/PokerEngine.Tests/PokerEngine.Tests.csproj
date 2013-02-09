@@ -45,7 +45,7 @@
   <ItemGroup>
     <Compile Include="Fakes\FakeDeck.cs" />
     <Compile Include="Fakes\FakePlayer.cs" />
-    <Compile Include="FoldingTheHand.cs" />
+    <Compile Include="FoldingYourButton.cs" />
     <Compile Include="StartingAGame.cs" />
     <Compile Include="StartingAHand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

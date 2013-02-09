@@ -4,16 +4,25 @@ using PokerEngine.Tests.Fakes;
 namespace PokerEngine.Tests
 {
     [TestFixture]
-    public class FoldingTheHand : IPlayOneCardPoker
+    public class FoldingYourButton : IPlayOneCardPoker
     {
         private string _opponentsAction;
+        private int _chipsReceived;
 
         [Test]
-        public void can_fold_the_hand()
+        public void told_that_the_opponent_folded()
         {
             var hand = new Hand(this, new AlwaysFolds(), new FakeDeck("A", "2"));
 
             Assert.That(_opponentsAction, Is.EqualTo("FOLD"));
+        }
+
+        [Test]
+        public void receives_one_chip_for_winning()
+        {
+            var hand = new Hand(this, new AlwaysFolds(), new FakeDeck("A", "2"));
+
+            Assert.That(_chipsReceived, Is.EqualTo(1));
         }
 
         public void ReceiveCard(string card)
@@ -40,6 +49,11 @@ namespace PokerEngine.Tests
         {
             _opponentsAction = action;
         }
+
+        public void ReceiveChips(int amount)
+        {
+            _chipsReceived = amount;
+        }
     }
 
     public class AlwaysFolds : IPlayOneCardPoker
@@ -63,6 +77,11 @@ namespace PokerEngine.Tests
 
         public void OpponentsAction(string action)
         {
+        }
+
+        public void ReceiveChips(int amount)
+        {
+            
         }
     }
 }

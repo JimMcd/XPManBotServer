@@ -22,5 +22,9 @@ namespace PokerEngine.Tests.Fakes
         public void OpponentsAction(string action)
         {
         }
+
+        public void ReceiveChips(int amount)
+        {
+        }
     }
 }

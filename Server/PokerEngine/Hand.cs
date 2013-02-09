@@ -10,6 +10,7 @@ namespace PokerEngine
             blind.PostBlind();
 
             blind.OpponentsAction(button.GetAction());
+            blind.ReceiveChips(1);
         }
     }
 }

@@ -70,5 +70,9 @@ namespace PokerEngine.Tests
         public void OpponentsAction(string action)
         {
         }
+
+        public void ReceiveChips(int amount)
+        {
+        }
     }
 }
