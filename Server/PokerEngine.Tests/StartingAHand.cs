@@ -61,5 +61,14 @@ namespace PokerEngine.Tests
         public void SendStartingChips(int chips)
         {
         }
+
+        public string GetAction()
+        {
+            return string.Empty;
+        }
+
+        public void OpponentsAction(string action)
+        {
+        }
     }
 }

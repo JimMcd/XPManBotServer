@@ -2,12 +2,14 @@ namespace PokerEngine
 {
     public class Hand
     {
-        public Hand(IPlayOneCardPoker p1, IPlayOneCardPoker p2, IRandomiseCards deck)
+        public Hand(IPlayOneCardPoker blind, IPlayOneCardPoker button, IRandomiseCards deck)
         {
-            p1.ReceiveCard(deck.Next());
-            p2.ReceiveCard(deck.Next());
+            blind.ReceiveCard(deck.Next());
+            button.ReceiveCard(deck.Next());
 
-            p1.PostBlind();
+            blind.PostBlind();
+
+            blind.OpponentsAction(button.GetAction());
         }
     }
 }

@@ -13,5 +13,14 @@ namespace PokerEngine.Tests.Fakes
         public void SendStartingChips(int chips)
         {
         }
+
+        public string GetAction()
+        {
+            return string.Empty;
+        }
+
+        public void OpponentsAction(string action)
+        {
+        }
     }
 }
