@@ -48,52 +48,62 @@ namespace PokerEngine
             _actNext = _playerButton;
             _actAfter = _playerBlind;
 
+            var firstAction = _actNext.Act(_actAfter);
+
+            switch (firstAction)
+            {
+                case "FOLD":
+                    Wins(_actAfter);
+                    break;
+                case "CALL":
+                    _pot += 1;
+                    GiveButtonOption();
+                    break;
+                case "BET":
+                    _pot += 2;
+                    OpenUpAction();
+                    break;
+            }
+        }
+
+        private void GiveButtonOption()
+        {
+            SwitchToAct();
             var nextAction = _actNext.Act(_actAfter);
 
-            if (nextAction == "FOLD")
+            if (nextAction == "CALL")
             {
-                Wins(_actAfter);
+                ShowDown(_actAfter, _actNext);
             }
+            else if (nextAction == "BET")
+            {
+                _pot += 1;
+                OpenUpAction();
+            }
+        }
+
+        private void OpenUpAction()
+        {
+            SwitchToAct();
+            string nextAction = _actNext.Act(_actAfter);
+
+            if (nextAction == "FOLD")
+                Wins(_actAfter);
             else if (nextAction == "CALL")
             {
+                _pot += 1;
+                ShowDown(_actAfter, _actNext);
+            }
+            else if (nextAction == "BET")
+            {
+                _pot += 2;
                 SwitchToAct();
                 nextAction = _actNext.Act(_actAfter);
 
                 if (nextAction == "CALL")
-                {
-                    _pot += 1;
                     ShowDown(_actAfter, _actNext);
-                }
-                else if (nextAction == "BET")
-                {
-                    _pot += 2;
-                    SwitchToAct();
-                    nextAction = _actNext.Act(_actAfter);
-
-                    if (nextAction == "CALL")
-                    {
-                        _pot += 1;
-                        ShowDown(_actAfter, _actNext);
-                    }
-                    else if (nextAction == "FOLD")
-                        Wins(_actAfter);
-                    else if (nextAction == "BET")
-                    {
-                        _pot += 1;
-                        SwitchToAct();
-                        nextAction = _actNext.Act(_actAfter);
-
-                        if (nextAction == "CALL")
-                            ShowDown(_actAfter, _actNext);
-                        else if (nextAction == "FOLD")
-                            Wins(_actAfter);
-                    }
-                }
-            }
-            else if (nextAction == "BET")
-            {
-                SwitchToAct();
-                nextAction = _actNext.Act(_actAfter);
+                else if (nextAction == "FOLD")
+                    Wins(_actAfter);
             }
         }
 
