@@ -3,7 +3,9 @@ namespace PokerEngine
     public class Hand
     {
         private int _pot;
-        private readonly PlayerWithCard _playerBlind, _playerButton;
+        private PlayerWithCard _playerBlind, _playerButton;
+        private PlayerWithCard _actNext;
+        private PlayerWithCard _actAfter;
 
 
         class PlayerWithCard
@@ -27,47 +29,90 @@ namespace PokerEngine
                 _card = card;
                 player.ReceiveCard(card);
             }
+
+            public string Act(PlayerWithCard opponent)
+            {
+                var action = _player.GetAction();
+                opponent.Player.OpponentsAction(action);
+                return action;
+            }
         }
 
 
         public Hand(IPlayOneCardPoker blind, IPlayOneCardPoker button, IRandomiseCards deck)
         {
-            _playerBlind = new PlayerWithCard(blind, deck.Next());
-            _playerButton = new PlayerWithCard(button, deck.Next());
+            DealCards(blind, button, deck);
 
-            PostBlinds();
+            PostBlinds(_playerBlind);
 
-            var buttonAction = _playerButton.Player.GetAction();
-            _playerBlind.Player.OpponentsAction(buttonAction);
+            _actNext = _playerButton;
+            _actAfter = _playerBlind;
 
-            if (buttonAction == "FOLD")
+            var nextAction = _actNext.Act(_actAfter);
+
+            if (nextAction == "FOLD")
             {
-                Wins(_playerBlind);
+                Wins(_actAfter);
             }
-            else
+            else if (nextAction == "CALL")
             {
-                _pot += 1;
+                SwitchToAct();
+                nextAction = _actNext.Act(_actAfter);
 
-                var blindAction = _playerBlind.Player.GetAction();
-                _playerButton.Player.OpponentsAction(blindAction);
-
-                if (blindAction == "CALL")
-                {
-                    ShowDown();
-                }
-                else
+                if (nextAction == "CALL")
                 {
                     _pot += 1;
-
-                    if (buttonAction == "CALL")
-                        ShowDown();           
+                    ShowDown(_actAfter, _actNext);
                 }
+                else if (nextAction == "BET")
+                {
+                    _pot += 2;
+                    SwitchToAct();
+                    nextAction = _actNext.Act(_actAfter);
+
+                    if (nextAction == "CALL")
+                    {
+                        _pot += 1;
+                        ShowDown(_actAfter, _actNext);
+                    }
+                    else if (nextAction == "FOLD")
+                        Wins(_actAfter);
+                    else if (nextAction == "BET")
+                    {
+                        _pot += 1;
+                        SwitchToAct();
+                        nextAction = _actNext.Act(_actAfter);
+
+                        if (nextAction == "CALL")
+                            ShowDown(_actAfter, _actNext);
+                        else if (nextAction == "FOLD")
+                            Wins(_actAfter);
+                    }
+                }
+            }
+            else if (nextAction == "BET")
+            {
+                SwitchToAct();
+                nextAction = _actNext.Act(_actAfter);
             }
         }
 
-        private void PostBlinds()
+        private void SwitchToAct()
         {
-            _playerBlind.Player.PostBlind();
+            var temp = _actNext;
+            _actNext = _actAfter;
+            _actAfter = temp;
+        }
+
+        private void DealCards(IPlayOneCardPoker blind, IPlayOneCardPoker button, IRandomiseCards deck)
+        {
+            _playerBlind = new PlayerWithCard(blind, deck.Next());
+            _playerButton = new PlayerWithCard(button, deck.Next());
+        }
+
+        private void PostBlinds(PlayerWithCard blind)
+        {
+            blind.Player.PostBlind();
             _pot = 1;
         }
 
@@ -76,21 +121,27 @@ namespace PokerEngine
             winner.Player.ReceiveChips(_pot);
         }
 
-        private void ButtonWins()
+        private void ShowDown(PlayerWithCard p1, PlayerWithCard p2)
         {
-            _playerButton.Player.ReceiveChips(_pot);
-        }
-
-        private void ShowDown()
-        {
-            if (Ranks.IndexOf(_playerBlind.Card) > Ranks.IndexOf(_playerButton.Card))
-                Wins(_playerBlind);
+            if (Card.Rank(p1.Card) > Card.Rank(p2.Card))
+                Wins(p1);
             else
-                ButtonWins();
+                Wins(p2);
         }
+    }
 
+    public class Card
+    {
         private const string Ranks = "2A";
 
+        public static int Rank(string card)
+        {
+            return Ranks.IndexOf(card, System.StringComparison.CurrentCulture);
+        }
+    }
+
+    internal interface IEndHand
+    {
     }
 
     internal interface IPlayerAction
