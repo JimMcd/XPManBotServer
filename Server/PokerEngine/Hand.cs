@@ -3,7 +3,6 @@ namespace PokerEngine
     public class Hand
     {
         private int _pot;
-        private PlayerWithCard _playerBlind, _playerButton;
         private PlayerWithCard _actNext;
         private PlayerWithCard _actAfter;
 
@@ -41,13 +40,12 @@ namespace PokerEngine
 
         public Hand(IPlayOneCardPoker blind, IPlayOneCardPoker button, IRandomiseCards deck)
         {
-            DealCards(blind, button, deck);
+            SetUpHand(blind, button, deck);
+            ButtonFirstAction();
+        }
 
-            PostBlinds(_playerBlind);
-
-            _actNext = _playerButton;
-            _actAfter = _playerBlind;
-
+        private void ButtonFirstAction()
+        {
             var firstAction = _actNext.Act(_actAfter);
 
             switch (firstAction)
@@ -57,7 +55,7 @@ namespace PokerEngine
                     break;
                 case "CALL":
                     _pot += 1;
-                    GiveButtonOption();
+                    GiveBlindOption();
                     break;
                 case "BET":
                     _pot += 2;
@@ -66,44 +64,41 @@ namespace PokerEngine
             }
         }
 
-        private void GiveButtonOption()
+        private void GiveBlindOption()
         {
             SwitchToAct();
             var nextAction = _actNext.Act(_actAfter);
 
-            if (nextAction == "CALL")
+            switch (nextAction)
             {
-                ShowDown(_actAfter, _actNext);
-            }
-            else if (nextAction == "BET")
-            {
-                _pot += 1;
-                OpenUpAction();
+                case "CALL":
+                    ShowDown(_actAfter, _actNext);
+                    break;
+                case "BET":
+                    _pot += 1;
+                    OpenUpAction();
+                    break;
             }
         }
 
         private void OpenUpAction()
         {
             SwitchToAct();
-            string nextAction = _actNext.Act(_actAfter);
+            var nextAction = _actNext.Act(_actAfter);
 
-            if (nextAction == "FOLD")
-                Wins(_actAfter);
-            else if (nextAction == "CALL")
+            switch (nextAction)
             {
-                _pot += 1;
-                ShowDown(_actAfter, _actNext);
-            }
-            else if (nextAction == "BET")
-            {
-                _pot += 2;
-                SwitchToAct();
-                nextAction = _actNext.Act(_actAfter);
-
-                if (nextAction == "CALL")
-                    ShowDown(_actAfter, _actNext);
-                else if (nextAction == "FOLD")
+                case "FOLD":
                     Wins(_actAfter);
+                    break;
+                case "CALL":
+                    _pot += 1;
+                    ShowDown(_actAfter, _actNext);
+                    break;
+                case "BET":
+                    _pot += 2;
+                    OpenUpAction();
+                    break;
             }
         }
 
@@ -114,10 +109,12 @@ namespace PokerEngine
             _actAfter = temp;
         }
 
-        private void DealCards(IPlayOneCardPoker blind, IPlayOneCardPoker button, IRandomiseCards deck)
+        private void SetUpHand(IPlayOneCardPoker blind, IPlayOneCardPoker button, IRandomiseCards deck)
         {
-            _playerBlind = new PlayerWithCard(blind, deck.Next());
-            _playerButton = new PlayerWithCard(button, deck.Next());
+            _actAfter = new PlayerWithCard(blind, deck.Next());
+            _actNext = new PlayerWithCard(button, deck.Next());
+
+            PostBlinds(_actAfter);
         }
 
         private void PostBlinds(PlayerWithCard blind)
