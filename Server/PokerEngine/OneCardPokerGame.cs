@@ -15,8 +15,8 @@ namespace PokerEngine
 
         public OneCardPokerGame(IPlayOneCardPoker p1, IPlayOneCardPoker p2, int startingChipCount, ICreateHands handFactory)
         {
-            _p1 = p1;
-            _p2 = p2;
+            _p1 = new CallIfNotEnoughChipsDecorator(p1);
+            _p2 = new CallIfNotEnoughChipsDecorator(p2);
             _handFactory = handFactory;
             p1.SendStartingChips(startingChipCount);
             p2.SendStartingChips(startingChipCount);
@@ -30,6 +30,59 @@ namespace PokerEngine
         public void ReportWinner(ITrackScores scoreBoard)
         {
             scoreBoard.ReportWinner("Hero");
+        }
+    }
+
+    public class CallIfNotEnoughChipsDecorator :IPlayOneCardPoker
+    {
+        private readonly IPlayOneCardPoker _inner;
+
+        public CallIfNotEnoughChipsDecorator(IPlayOneCardPoker inner )
+        {
+            _inner = inner;
+        }
+
+        public int Stack
+        {
+            get { return _inner.Stack; }
+        }
+
+        public void DeductChips(int chipAmount)
+        {
+            _inner.DeductChips(chipAmount);
+        }
+
+        public void ReceiveCard(string card)
+        {
+            _inner.ReceiveCard(card);
+        }
+
+        public void PostBlind()
+        {
+            _inner.PostBlind();
+        }
+
+        public void SendStartingChips(int chips)
+        {
+            _inner.SendStartingChips(chips);
+        }
+
+        public string GetAction()
+        {
+            var action = _inner.GetAction();
+            if (action == "BET" && _inner.Stack < 2)
+                return "CALL";
+            return action;
+        }
+
+        public void OpponentsAction(string action)
+        {
+            _inner.OpponentsAction(action);
+        }
+
+        public void ReceiveChips(int amount)
+        {
+            _inner.ReceiveChips(amount);
         }
     }
 }
