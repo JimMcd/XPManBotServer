@@ -1,6 +1,6 @@
 using System.Linq;
 
-namespace Server.Tests
+namespace Server
 {
     public class BotServer
     {

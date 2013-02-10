@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Server.Tests
+namespace Server
 {
     public class GameCreator : ICreateGames
     {
@@ -20,4 +20,6 @@ namespace Server.Tests
             var secondBot = _botCreator.Create(bot2);
         }
     }
+
+
 }

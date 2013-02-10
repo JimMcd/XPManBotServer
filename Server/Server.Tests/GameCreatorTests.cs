@@ -19,10 +19,10 @@ namespace Server.Tests
             Assert.That(_botsCreated, Is.EqualTo(2));
         }
 
-        public string Create(string botName)
+        public Bot Create(string botName)
         {
             _botsCreated++;
-            return "";
+            return null;
         }
     }
 

@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BotCreator.cs" />
     <Compile Include="BotFinder.cs" />
     <Compile Include="BotServer.cs" />
     <Compile Include="GameCreator.cs" />
