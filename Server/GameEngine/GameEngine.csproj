@@ -47,6 +47,7 @@
     <Compile Include="HeadsUp\ICreateBots.cs" />
     <Compile Include="HeadsUp\ICreateFixtures.cs" />
     <Compile Include="HeadsUp\ICreateHeadsUpGames.cs" />
+    <Compile Include="HeadsUp\ITrackScores.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

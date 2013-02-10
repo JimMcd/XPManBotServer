@@ -1,4 +1,5 @@
 using System;
+using GameEngine.HeadsUp;
 using NUnit.Framework;
 using PokerEngine.Tests.Fakes;
 
@@ -22,14 +23,15 @@ namespace PokerEngine.Tests
 
 
     [TestFixture]
-    public class PlayerGetsAllIn
+    public class PlayerGetsAllIn : ITrackScores
     {
+        private string _winnerName;
+
         [Test]
         public void something()
         {
-            var hero = new FakePlayer();
-            var villain = new FakePlayer();
-
+            var hero = new FakePlayer("Hero");
+            var villain = new FakePlayer("Villain");
 
             hero.Will("BET", "BET", "BET", "BET");
             villain.Will("BET", "BET", "BET", "BET");
@@ -37,8 +39,14 @@ namespace PokerEngine.Tests
             var game = new OneCardPokerGame(hero, villain, 2, new FakeHandFactory(() => new FakeDeck("A", "2")));
 
             game.ReportWinner(this);
+
+            Assert.That(_winnerName, Is.EqualTo("Hero"));
         }
 
+        public void ReportWinner(string winnerName)
+        {
+            _winnerName = winnerName;
+        }
     }
 
 

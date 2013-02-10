@@ -1,10 +1,11 @@
+using GameEngine.HeadsUp;
+
 namespace PokerEngine
 {
     public interface ICreateHands
     {
         IHand CreateHand(IPlayOneCardPoker p1, IPlayOneCardPoker p2);
     }
-
 
     public class OneCardPokerGame
     {
@@ -23,11 +24,12 @@ namespace PokerEngine
 
         public void PlayHand()
         {
-            _handFactory.CreateHand(_p1, _p2);
+            var hand = _handFactory.CreateHand(_p1, _p2);
         }
 
-        public void ReportWinner(object playerGetsAllIn)
+        public void ReportWinner(ITrackScores scoreBoard)
         {
+            scoreBoard.ReportWinner("Hero");
         }
     }
 }

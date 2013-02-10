@@ -7,6 +7,16 @@ namespace PokerEngine.Tests
 {
     public class AlwaysRaises : IPlayOneCardPoker
     {
+        public int Stack
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public void DeductChips(int chipAmount)
+        {
+            throw new NotImplementedException();
+        }
+
         public void ReceiveCard(string card)
         {
 

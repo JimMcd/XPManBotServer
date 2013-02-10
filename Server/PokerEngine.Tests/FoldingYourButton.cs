@@ -24,33 +24,4 @@ namespace PokerEngine.Tests
             Assert.That(hero.ReceivedChipAmount, Is.EqualTo(1));
         }
     }
-
-    public class AlwaysFolds : IPlayOneCardPoker
-    {
-        public void ReceiveCard(string card)
-        {
-        }
-
-        public void PostBlind()
-        {
-        }
-
-        public void SendStartingChips(int chips)
-        {
-        }
-
-        public string GetAction()
-        {
-            return "FOLD";
-        }
-
-        public void OpponentsAction(string action)
-        {
-        }
-
-        public void ReceiveChips(int amount)
-        {
-            
-        }
-    }
 }

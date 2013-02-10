@@ -25,6 +25,15 @@ namespace PokerEngine.Tests.Fakes
             PlayerName = playerName;
         }
 
+        public int Stack
+        {
+            get { throw new System.NotImplementedException(); }
+        }
+
+        public void DeductChips(int chipAmount)
+        {
+            throw new System.NotImplementedException();
+        }
 
         public void ReceiveCard(string card)
         {
