@@ -2,7 +2,8 @@ namespace GameEngine.HeadsUp
 {
     public interface IAmABot
     {
-        void GetMessage(string message);
+        void SendMessage(string message);
         string GetMessage();
+        void SendGameOver();
     }
 }
