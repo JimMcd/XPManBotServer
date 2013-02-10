@@ -40,8 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HeadsUpGameEngine.cs" />
+    <Compile Include="HeadsUp\Fixture.cs" />
     <Compile Include="HeadsUp\IAmABot.cs" />
     <Compile Include="HeadsUp\IAmAHeadsUpGame.cs" />
+    <Compile Include="HeadsUp\ICreateBots.cs" />
+    <Compile Include="HeadsUp\ICreateFixtures.cs" />
     <Compile Include="HeadsUp\ICreateHeadsUpGames.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
