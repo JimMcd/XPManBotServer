@@ -12,7 +12,7 @@ namespace Server.Tests
             {
                 var bot1 = bots.First();
                 bots.Remove(bot1);
-                bots.ForEach(bot2 => gameCreator.Create(bot1, bot2));
+                bots.ForEach(bot2 => gameCreator.CreateGame(bot1, bot2));
             }
         }
     }

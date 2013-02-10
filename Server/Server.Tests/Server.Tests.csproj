@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Fakes\FakeBotFinder.cs" />
     <Compile Include="finding_bots_to_load.cs" />
+    <Compile Include="GameCreatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerTests.cs" />
     <Compile Include="will_load_bot_from_name.cs" />

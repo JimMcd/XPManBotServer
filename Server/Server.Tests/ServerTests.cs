@@ -28,7 +28,7 @@ namespace Server.Tests
             Assert.That(_gamesCreated, Is.EqualTo(3));
         }
 
-        public void Create(string bot1, string bot2)
+        public void CreateGame(string bot1, string bot2)
         {
             _gamesCreated++;
         }

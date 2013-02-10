@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Server
+namespace Server.Tests
 {
-    public interface ICreateGames
+    public interface ICreateBots
     {
-        void CreateGame(string bot1, string bot2);
+        string Create(string botName);
     }
 }
