@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HeadsUp\IAmABot.cs" />
+    <Compile Include="HeadsUp\IAmAHeadsUpGame.cs" />
     <Compile Include="HeadsUp\ICreateHeadsUpGames.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
