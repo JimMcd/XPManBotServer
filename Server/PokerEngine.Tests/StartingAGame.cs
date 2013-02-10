@@ -1,59 +1,80 @@
+using System;
 using NUnit.Framework;
 using PokerEngine.Tests.Fakes;
 
 namespace PokerEngine.Tests
 {
-    [TestFixture]
-    public class StartingAGame : IPlayOneCardPoker
+    public class FakeHandFactory : ICreateHands
     {
-        private int _startingChips;
+        private readonly Func<IRandomiseCards> _deckBuilder;
 
-        [SetUp]
-        public void UpSet()
+        public FakeHandFactory(Func<IRandomiseCards> deckBuilder)
         {
-            _startingChips = 0;
+            _deckBuilder = deckBuilder;
         }
 
-        [Test]
-        public void starts_a_game_and_sends_chip_stacks_to_player1()
+
+        public IHand CreateHand(IPlayOneCardPoker p1, IPlayOneCardPoker p2)
         {
-            var game = new OneCardPokerGame(this, new FakePlayer(), 10);
-
-            Assert.That(_startingChips, Is.EqualTo(10));
-        }
-
-        [Test]
-        public void starts_a_game_and_sends_chip_stacks_to_player2()
-        {
-            var game = new OneCardPokerGame(new FakePlayer(), this, 10);
-
-            Assert.That(_startingChips, Is.EqualTo(10));
-        }
-
-        public void ReceiveCard(string card)
-        {
-        }
-
-        public void PostBlind()
-        {
-        }
-
-        public void SendStartingChips(int chips)
-        {
-            _startingChips = chips;
-        }
-
-        public string GetAction()
-        {
-            return string.Empty;
-        }
-
-        public void OpponentsAction(string action)
-        {
-        }
-
-        public void ReceiveChips(int amount)
-        {
+            return new Hand(p1, p2, _deckBuilder());
         }
     }
+
+
+    [TestFixture]
+    public class PlayerGetsAllIn
+    {
+        [Test]
+        public void something()
+        {
+            var hero = new FakePlayer();
+            var villain = new FakePlayer();
+
+
+            hero.Will("BET", "BET", "BET", "BET");
+            villain.Will("BET", "BET", "BET", "BET");
+
+            var game = new OneCardPokerGame(hero, villain, 2, new FakeHandFactory(() => new FakeDeck("A", "2")));
+
+            game.ReportWinner(this);
+        }
+
+    }
+
+
+    [TestFixture]
+    public class StartingAGame : ICreateHands
+    {
+        private bool _handCreated;
+
+        [Test]
+        public void players_are_sent_the_starting_amount()
+        {
+            var p1 = new FakePlayer();
+            var p2 = new FakePlayer();
+            var game = new OneCardPokerGame(p1, p2, 10, this);
+
+            Assert.That(p1.StartingChips, Is.EqualTo(10));
+            Assert.That(p2.StartingChips, Is.EqualTo(10));
+        }
+
+        [Test]
+        public void creates_a_hand_from_factory()
+        {
+            var p1 = new FakePlayer();
+            var p2 = new FakePlayer();
+            var game = new OneCardPokerGame(p1, p2, 10, this);
+
+            game.PlayHand();
+
+            Assert.That(_handCreated, Is.True);
+        }
+
+        public IHand CreateHand(IPlayOneCardPoker p1, IPlayOneCardPoker p2)
+        {
+            _handCreated = true;
+            return new Hand(p1, p2, new FakeDeck("A", "2"));
+        }
+    }
+
 }

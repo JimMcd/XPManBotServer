@@ -13,6 +13,19 @@ namespace PokerEngine.Tests.Fakes
         public int ReceivedChipAmount { get; set; }
         public bool PostedBlind { get; set; }
 
+        public string PlayerName { get; private set; }
+
+        public FakePlayer()
+        {
+            PlayerName = "Unknown";
+        }
+
+        public FakePlayer(string playerName)
+        {
+            PlayerName = playerName;
+        }
+
+
         public void ReceiveCard(string card)
         {
             ReceivedCard = card;

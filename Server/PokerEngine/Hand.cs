@@ -1,6 +1,10 @@
 namespace PokerEngine
 {
-    public class Hand
+    public interface IHand
+    {
+    }
+
+    public class Hand : IHand
     {
         private int _pot;
         private PlayerWithCard _actNext;
