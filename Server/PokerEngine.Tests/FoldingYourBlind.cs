@@ -1,12 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using PokerEngine.Tests.Fakes;
 
 namespace PokerEngine.Tests
 {
+    [TestFixture]
+    public class ButtonFoldsToReraise
+    {
+        [Test]
+        public void hero_takes_5_chips()
+        {
+            var hero = new FakePlayer();
+            var villain = new FakePlayer();
+
+
+            villain.Will("BET", "FOLD");
+            hero.Will("BET");
+
+            var hand = new Hand(hero, villain, new FakeDeck("A", "2"));
+
+            Assert.That(hero.ReceivedChipAmount, Is.EqualTo(5));
+        }
+    }
+
+
+
     [TestFixture]
     public class FoldingYourBlind : IPlayOneCardPoker
     {
