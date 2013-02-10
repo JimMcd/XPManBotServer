@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace BotEngine
 {
-    public class BotFinder
+    public class BotFinder : IFindBots
     {
         private readonly string _locationToLook;
 
@@ -13,10 +13,15 @@ namespace BotEngine
             _locationToLook = locationToLook;
         }
 
-        public IList<string> Find()
+        public List<string> Find()
         {
             var bots = Directory.GetDirectories(_locationToLook).ToList().ConvertAll(b => b.Replace(_locationToLook, ""));
             return bots;
         }
+    }
+
+    public interface IFindBots
+    {
+        List<string> Find();
     }
 }

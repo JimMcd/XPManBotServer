@@ -43,15 +43,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BotCreator.cs" />
-    <Compile Include="BotFinder.cs" />
-    <Compile Include="BotServer.cs" />
-    <Compile Include="GameCreator.cs" />
-    <Compile Include="ICreateBots.cs" />
-    <Compile Include="ICreateGames.cs" />
-    <Compile Include="ProcessBot.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GameEngine\GameEngine.csproj">
+      <Project>{89b4f123-fda8-4c65-9746-cfe800ba040f}</Project>
+      <Name>GameEngine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PokerEngine\PokerEngine.csproj">
+      <Project>{bf83a545-c6d4-44e6-a7fd-710acfc0a443}</Project>
+      <Name>PokerEngine</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
