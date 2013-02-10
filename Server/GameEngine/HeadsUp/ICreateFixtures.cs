@@ -7,6 +7,6 @@ namespace GameEngine.HeadsUp
 {
     public interface ICreateFixtures
     {
-        Fixture GetFixtures();
+        List<Fixture> GetFixtures();
     }
 }

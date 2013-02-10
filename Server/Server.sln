@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{A7B8267A-C7E6-40F6-9B14-FD315F61F938}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server.Tests", "Server.Tests\Server.Tests.csproj", "{C652FD0D-FB46-45DE-A371-6299CDD329D8}"
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokerEngine.Tests", "PokerEngine.Tests\PokerEngine.Tests.csproj", "{4470254A-DA17-486F-A7B0-C431D7623067}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameEngine", "GameEngine\GameEngine.csproj", "{89B4F123-FDA8-4C65-9746-CFE800BA040F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotEngine", "BotEngine\BotEngine.csproj", "{B2CC9036-BED1-4DC6-AEDA-4EAB8063F0BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +73,16 @@ Global
 		{89B4F123-FDA8-4C65-9746-CFE800BA040F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{89B4F123-FDA8-4C65-9746-CFE800BA040F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{89B4F123-FDA8-4C65-9746-CFE800BA040F}.Release|x86.ActiveCfg = Release|Any CPU
+		{B2CC9036-BED1-4DC6-AEDA-4EAB8063F0BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2CC9036-BED1-4DC6-AEDA-4EAB8063F0BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2CC9036-BED1-4DC6-AEDA-4EAB8063F0BE}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B2CC9036-BED1-4DC6-AEDA-4EAB8063F0BE}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B2CC9036-BED1-4DC6-AEDA-4EAB8063F0BE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B2CC9036-BED1-4DC6-AEDA-4EAB8063F0BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2CC9036-BED1-4DC6-AEDA-4EAB8063F0BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2CC9036-BED1-4DC6-AEDA-4EAB8063F0BE}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B2CC9036-BED1-4DC6-AEDA-4EAB8063F0BE}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{B2CC9036-BED1-4DC6-AEDA-4EAB8063F0BE}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
