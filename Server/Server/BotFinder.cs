@@ -4,7 +4,12 @@ using System.Linq;
 
 namespace Server
 {
-    public class BotFinder
+    public interface IFindBots
+    {
+        IList<string> Find();
+    }
+
+    public class BotFinder : IFindBots
     {
         public IList<string> Find()
         {
