@@ -13,8 +13,8 @@ namespace GameEngine.HeadsUp
 
     public interface IAmABot
     {
-        void ReceiveMessage();
-        string SendMessage();
+        void GetMessage(string message);
+        string GetMessage();
     }
 
     public interface ICreateHeadsUpGames
