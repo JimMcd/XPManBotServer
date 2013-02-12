@@ -4,52 +4,65 @@ namespace PokerEngine
 {
     public interface ICreateHands
     {
-        IHand CreateHand(IPlayOneCardPoker p1, IPlayOneCardPoker p2);
+        IHand CreateHand(IManagePlayersStack p1, IManagePlayersStack p2);
     }
 
     public class OneCardPokerGame
     {
-        private readonly IPlayOneCardPoker _p1;
-        private readonly IPlayOneCardPoker _p2;
+        private readonly IManagePlayersStack _p1;
+        private readonly IManagePlayersStack _p2;
         private readonly ICreateHands _handFactory;
+        private string _winnerName;
 
         public OneCardPokerGame(IPlayOneCardPoker p1, IPlayOneCardPoker p2, int startingChipCount, ICreateHands handFactory)
         {
-            _p1 = new CallIfNotEnoughChipsDecorator(p1);
-            _p2 = new CallIfNotEnoughChipsDecorator(p2);
+            _p1 = new StackCoordinator(p1);
+            _p2 = new StackCoordinator(p2);
             _handFactory = handFactory;
-            p1.SendStartingChips(startingChipCount);
-            p2.SendStartingChips(startingChipCount);
+            _p1.SendStartingChips(startingChipCount);
+            _p2.SendStartingChips(startingChipCount);
         }
 
-        public void PlayHand()
+        public void Play()
         {
-            var hand = _handFactory.CreateHand(_p1, _p2);
+            while (_p1.Stack > 0 && _p2.Stack > 0)
+            {
+                var hand = _handFactory.CreateHand(_p1, _p2);
+            }
+
+            if (_p1.Stack > 0)
+                _winnerName = _p1.Name;
+            else
+                _winnerName = _p2.Name;
+
+
         }
 
         public void ReportWinner(ITrackScores scoreBoard)
         {
-            scoreBoard.ReportWinner("Hero");
+            scoreBoard.ReportWinner(_winnerName);
         }
     }
 
-    public class CallIfNotEnoughChipsDecorator :IPlayOneCardPoker
+    public class StackCoordinator : IManagePlayersStack
     {
         private readonly IPlayOneCardPoker _inner;
 
-        public CallIfNotEnoughChipsDecorator(IPlayOneCardPoker inner )
+        public StackCoordinator(IPlayOneCardPoker inner)
         {
             _inner = inner;
         }
 
-        public int Stack
-        {
-            get { return _inner.Stack; }
-        }
+        public int Stack { get; private set; }
 
         public void DeductChips(int chipAmount)
         {
-            _inner.DeductChips(chipAmount);
+            Stack -= chipAmount;
+        }
+
+        public string Name
+        {
+            get { return _inner.Name; }
         }
 
         public void ReceiveCard(string card)
@@ -64,13 +77,14 @@ namespace PokerEngine
 
         public void SendStartingChips(int chips)
         {
+            Stack = chips;
             _inner.SendStartingChips(chips);
         }
 
         public string GetAction()
         {
             var action = _inner.GetAction();
-            if (action == "BET" && _inner.Stack < 2)
+            if (action == "BET" && Stack < 2)
                 return "CALL";
             return action;
         }
@@ -82,6 +96,7 @@ namespace PokerEngine
 
         public void ReceiveChips(int amount)
         {
+            this.Stack += amount;
             _inner.ReceiveChips(amount);
         }
     }

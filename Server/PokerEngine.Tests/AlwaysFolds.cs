@@ -1,6 +1,6 @@
 namespace PokerEngine.Tests
 {
-    public class AlwaysFolds : IPlayOneCardPoker
+    public class AlwaysFolds : IManagePlayersStack
     {
         public int Stack
         {
@@ -10,6 +10,11 @@ namespace PokerEngine.Tests
         public void DeductChips(int chipAmount)
         {
             throw new System.NotImplementedException();
+        }
+
+        public string Name
+        {
+            get { return "AlwaysFolds"; }
         }
 
         public void ReceiveCard(string card)

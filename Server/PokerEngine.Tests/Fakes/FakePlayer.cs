@@ -2,8 +2,9 @@ using System.Collections.Generic;
 
 namespace PokerEngine.Tests.Fakes
 {
-    public class FakePlayer : IPlayOneCardPoker
+    public class FakePlayer : IManagePlayersStack
     {
+        public string Name { get; private set; }
         private List<string> _actions = new List<string>();
         private int _actionIndex = 0;
 
@@ -13,16 +14,15 @@ namespace PokerEngine.Tests.Fakes
         public int ReceivedChipAmount { get; set; }
         public bool PostedBlind { get; set; }
 
-        public string PlayerName { get; private set; }
 
         public FakePlayer()
         {
-            PlayerName = "Unknown";
+            Name = "Unknown";
         }
 
         public FakePlayer(string playerName)
         {
-            PlayerName = playerName;
+            Name = playerName;
         }
 
         public int Stack
@@ -30,9 +30,11 @@ namespace PokerEngine.Tests.Fakes
             get { throw new System.NotImplementedException(); }
         }
 
+        public int TotalLostChips { get; private set; }
+
         public void DeductChips(int chipAmount)
         {
-            throw new System.NotImplementedException();
+            TotalLostChips += chipAmount;
         }
 
         public void ReceiveCard(string card)

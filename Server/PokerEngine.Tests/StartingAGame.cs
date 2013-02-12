@@ -15,7 +15,7 @@ namespace PokerEngine.Tests
         }
 
 
-        public IHand CreateHand(IPlayOneCardPoker p1, IPlayOneCardPoker p2)
+        public IHand CreateHand(IManagePlayersStack p1, IManagePlayersStack p2)
         {
             return new Hand(p1, p2, _deckBuilder());
         }
@@ -23,7 +23,37 @@ namespace PokerEngine.Tests
 
 
     [TestFixture]
-    public class PlayerGetsAllIn : ITrackScores
+    public class GameEndsAfterTwoHands : ITrackScores
+    {
+        private string _winnerName;
+
+        [Test]
+        public void something()
+        {
+            var hero = new FakePlayer("Hero");
+            var villain = new FakePlayer("Villain");
+
+            villain.Will("CALL", "CALL", "CALL", "CALL");
+            hero.Will("BET", "BET", "BET", "BET");
+
+            var game = new OneCardPokerGame(hero, villain, 2, new FakeHandFactory(() => new FakeDeck("2", "A")));
+
+            game.Play();
+
+            game.ReportWinner(this);
+
+            Assert.That(_winnerName, Is.EqualTo("Villain"));
+        }
+
+        public void ReportWinner(string winnerName)
+        {
+            _winnerName = winnerName;
+        }
+    }
+
+
+    [TestFixture]
+    public class PlayerGetsAllInFirstHand : ITrackScores
     {
         private string _winnerName;
 
@@ -37,6 +67,8 @@ namespace PokerEngine.Tests
             villain.Will("BET", "BET", "BET", "BET");
 
             var game = new OneCardPokerGame(hero, villain, 2, new FakeHandFactory(() => new FakeDeck("A", "2")));
+
+            game.Play();
 
             game.ReportWinner(this);
 
@@ -69,16 +101,16 @@ namespace PokerEngine.Tests
         [Test]
         public void creates_a_hand_from_factory()
         {
-            var p1 = new FakePlayer();
-            var p2 = new FakePlayer();
+            var p1 = new AlwaysRaises();
+            var p2 = new AlwaysRaises();
             var game = new OneCardPokerGame(p1, p2, 10, this);
 
-            game.PlayHand();
+            game.Play();
 
             Assert.That(_handCreated, Is.True);
         }
 
-        public IHand CreateHand(IPlayOneCardPoker p1, IPlayOneCardPoker p2)
+        public IHand CreateHand(IManagePlayersStack p1, IManagePlayersStack p2)
         {
             _handCreated = true;
             return new Hand(p1, p2, new FakeDeck("A", "2"));

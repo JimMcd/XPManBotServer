@@ -13,10 +13,10 @@ namespace PokerEngine
 
         class PlayerWithCard
         {
-            private readonly IPlayOneCardPoker _player;
+            private readonly IManagePlayersStack _player;
             private readonly string _card;
 
-            public IPlayOneCardPoker Player
+            public IManagePlayersStack Player
             {
                 get { return _player; }
             }
@@ -26,7 +26,7 @@ namespace PokerEngine
                 get { return _card; }
             }
 
-            public PlayerWithCard(IPlayOneCardPoker player, string card)
+            public PlayerWithCard(IManagePlayersStack player, string card)
             {
                 _player = player;
                 _card = card;
@@ -42,7 +42,7 @@ namespace PokerEngine
         }
 
 
-        public Hand(IPlayOneCardPoker blind, IPlayOneCardPoker button, IRandomiseCards deck)
+        public Hand(IManagePlayersStack blind, IManagePlayersStack button, IRandomiseCards deck)
         {
             SetUpHand(blind, button, deck);
             ButtonFirstAction();
@@ -58,11 +58,11 @@ namespace PokerEngine
                     Wins(_actAfter);
                     break;
                 case "CALL":
-                    _pot += 1;
+                    Bet(_actNext, 1);
                     GiveBlindOption();
                     break;
                 case "BET":
-                    _pot += 2;
+                    Bet(_actNext, 2);
                     OpenUpAction();
                     break;
             }
@@ -79,7 +79,7 @@ namespace PokerEngine
                     ShowDown(_actAfter, _actNext);
                     break;
                 case "BET":
-                    _pot += 1;
+                    Bet(_actNext, 1);
                     OpenUpAction();
                     break;
             }
@@ -96,11 +96,11 @@ namespace PokerEngine
                     Wins(_actAfter);
                     break;
                 case "CALL":
-                    _pot += 1;
+                    Bet(_actNext, 1);
                     ShowDown(_actAfter, _actNext);
                     break;
                 case "BET":
-                    _pot += 2;
+                    Bet(_actNext, 2);
                     OpenUpAction();
                     break;
             }
@@ -113,7 +113,7 @@ namespace PokerEngine
             _actAfter = temp;
         }
 
-        private void SetUpHand(IPlayOneCardPoker blind, IPlayOneCardPoker button, IRandomiseCards deck)
+        private void SetUpHand(IManagePlayersStack blind, IManagePlayersStack button, IRandomiseCards deck)
         {
             _actAfter = new PlayerWithCard(blind, deck.Next());
             _actNext = new PlayerWithCard(button, deck.Next());
@@ -124,7 +124,13 @@ namespace PokerEngine
         private void PostBlinds(PlayerWithCard blind)
         {
             blind.Player.PostBlind();
-            _pot = 1;
+            Bet(blind, 1);
+        }
+
+        private void Bet(PlayerWithCard bettor, int chipAmount)
+        {
+            bettor.Player.DeductChips(chipAmount);
+            _pot += chipAmount;
         }
 
         private void Wins(PlayerWithCard winner)

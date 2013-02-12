@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PokerEngine.Tests
 {
-    public class AlwaysRaises : IPlayOneCardPoker
+    public class AlwaysRaises : IManagePlayersStack
     {
         public int Stack
         {
@@ -14,7 +14,11 @@ namespace PokerEngine.Tests
 
         public void DeductChips(int chipAmount)
         {
-            throw new NotImplementedException();
+        }
+
+        public string Name
+        {
+            get { return "AlwaysRaises"; }
         }
 
         public void ReceiveCard(string card)

@@ -1,9 +1,14 @@
 namespace PokerEngine
 {
-    public interface IPlayOneCardPoker
+    public interface IManagePlayersStack : IPlayOneCardPoker
     {
         int Stack { get; }
         void DeductChips(int chipAmount);
+    }
+
+    public interface IPlayOneCardPoker
+    {
+        string Name { get; }
         void ReceiveCard(string card);
         void PostBlind();
         void SendStartingChips(int chips);
