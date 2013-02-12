@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using BotEngine;
 using GameEngine;
 
 namespace Server
@@ -9,6 +10,10 @@ namespace Server
     {
         public static void Main(string[] args)
         {
+            var botCreator = new BotCreator();
+            var fixtureCreator = new RoundRobinFixtures(new BotFinder(@"c:\bots"));
+
+            var gameEngine = new HeadsUpGameEngine(botCreator, fixtureCreator, null);
         }
     }
 }

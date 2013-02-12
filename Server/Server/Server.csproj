@@ -45,8 +45,13 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scoreboard.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BotEngine\BotEngine.csproj">
+      <Project>{B2CC9036-BED1-4DC6-AEDA-4EAB8063F0BE}</Project>
+      <Name>BotEngine</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GameEngine\GameEngine.csproj">
       <Project>{89b4f123-fda8-4c65-9746-cfe800ba040f}</Project>
       <Name>GameEngine</Name>
