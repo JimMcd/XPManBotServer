@@ -1,7 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using BotEngine;
+﻿using BotEngine;
 using GameEngine;
 
 namespace Server

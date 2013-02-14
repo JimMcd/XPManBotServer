@@ -149,7 +149,7 @@ namespace PokerEngine
 
     public class Card
     {
-        private const string Ranks = "2A";
+        private const string Ranks = "23456789TJQKA";
 
         public static int Rank(string card)
         {
