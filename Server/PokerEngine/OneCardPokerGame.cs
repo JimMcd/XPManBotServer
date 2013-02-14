@@ -1,3 +1,4 @@
+using System;
 using GameEngine.HeadsUp;
 
 namespace PokerEngine
@@ -11,7 +12,7 @@ namespace PokerEngine
     {
         public IHand CreateHand(IManagePlayersStack p1, IManagePlayersStack p2)
         {
-            return new Hand(p1, p2, null);
+            return new Hand(p1, p2, new Deck());
         }
     }
 
@@ -43,7 +44,7 @@ namespace PokerEngine
             else
                 _winnerName = _p2.Name;
 
-
+            Console.WriteLine(_winnerName + " WINS!");
         }
 
         public void ReportWinner(ITrackScores scoreBoard)
@@ -107,6 +108,11 @@ namespace PokerEngine
             this.Stack += amount;
             _inner.ReceiveChips(amount);
         }
+
+        public void SendButton()
+        {
+            _inner.SendButton();
+        }
     }
 
     public class BotMessagenger : IPlayOneCardPoker
@@ -147,6 +153,11 @@ namespace PokerEngine
         public void ReceiveChips(int amount)
         {
             _bot.SendMessage("WON:" + amount);
+        }
+
+        public void SendButton()
+        {
+            _bot.SendMessage("BUTTON");
         }
     }
 }

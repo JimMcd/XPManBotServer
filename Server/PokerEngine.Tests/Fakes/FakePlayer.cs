@@ -73,6 +73,11 @@ namespace PokerEngine.Tests.Fakes
             ReceivedChipAmount = amount;
         }
 
+        public void SendButton()
+        {
+            
+        }
+
         public void Will(params string [] actions)
         {
             _actions = new List<string>(actions);

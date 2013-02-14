@@ -15,5 +15,6 @@ namespace PokerEngine
         string GetAction();
         void OpponentsAction(string action);
         void ReceiveChips(int amount);
+        void SendButton();
     }
 }

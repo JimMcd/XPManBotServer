@@ -42,6 +42,7 @@ namespace PokerEngine.Tests
     [TestFixture]
     public class FoldingYourBlind : IManagePlayersStack
     {
+
         private bool _chipsReceived = false;
         private bool _actionSent = false;
         private int _chipsLost;
@@ -110,6 +111,11 @@ namespace PokerEngine.Tests
         public void ReceiveChips(int amount)
         {
             _chipsReceived = true;
+        }
+
+        public void SendButton()
+        {
+            
         }
     }
 }

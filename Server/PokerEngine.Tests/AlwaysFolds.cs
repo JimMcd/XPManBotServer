@@ -42,5 +42,10 @@ namespace PokerEngine.Tests
         {
             
         }
+
+        public void SendButton()
+        {
+
+        }
     }
 }
