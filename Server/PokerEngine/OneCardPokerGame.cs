@@ -7,7 +7,15 @@ namespace PokerEngine
         IHand CreateHand(IManagePlayersStack p1, IManagePlayersStack p2);
     }
 
-    public class OneCardPokerGame
+    public class HandCreator : ICreateHands
+    {
+        public IHand CreateHand(IManagePlayersStack p1, IManagePlayersStack p2)
+        {
+            return new Hand(p1, p2, null);
+        }
+    }
+
+    public class OneCardPokerGame : IAmAHeadsUpGame
     {
         private readonly IManagePlayersStack _p1;
         private readonly IManagePlayersStack _p2;
@@ -98,6 +106,47 @@ namespace PokerEngine
         {
             this.Stack += amount;
             _inner.ReceiveChips(amount);
+        }
+    }
+
+    public class BotMessagenger : IPlayOneCardPoker
+    {
+        private readonly IAmABot _bot;
+
+        public BotMessagenger(IAmABot bot)
+        {
+            _bot = bot;
+        }
+
+        public string Name { get; private set; }
+        public void ReceiveCard(string card)
+        {
+            _bot.SendMessage("CARD:" + card);
+        }
+
+        public void PostBlind()
+        {
+            _bot.SendMessage("BLIND");
+        }
+
+        public void SendStartingChips(int chips)
+        {
+            _bot.SendMessage("STARTING_CHIPS:" + chips);
+        }
+
+        public string GetAction()
+        {
+            return _bot.GetMessage();
+        }
+
+        public void OpponentsAction(string action)
+        {
+            _bot.SendMessage("OPPONENT:" + action);
+        }
+
+        public void ReceiveChips(int amount)
+        {
+            _bot.SendMessage("WON:" + amount);
         }
     }
 }

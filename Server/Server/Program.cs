@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using BotEngine;
 using GameEngine;
+using PokerEngine;
 
 namespace Server
 {
@@ -12,8 +13,9 @@ namespace Server
         {
             var botCreator = new BotCreator();
             var fixtureCreator = new RoundRobinFixtures(new BotFinder(@"c:\bots"));
-
-            var gameEngine = new HeadsUpGameEngine(botCreator, fixtureCreator, null);
+            var gameCreator = new HeadsUpGameCreator();
+            var gameEngine = new HeadsUpGameEngine(botCreator, fixtureCreator, gameCreator);
+            gameEngine.PlayAll();
         }
     }
 }
