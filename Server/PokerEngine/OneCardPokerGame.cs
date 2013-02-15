@@ -8,14 +8,6 @@ namespace PokerEngine
         IHand CreateHand(IManagePlayersStack p1, IManagePlayersStack p2);
     }
 
-    public class HandCreator : ICreateHands
-    {
-        public IHand CreateHand(IManagePlayersStack p1, IManagePlayersStack p2)
-        {
-            return new Hand(p1, p2, new Deck());
-        }
-    }
-
     public class OneCardPokerGame : IAmAHeadsUpGame
     {
         private readonly IManagePlayersStack _p1;
@@ -34,9 +26,20 @@ namespace PokerEngine
 
         public void Play()
         {
+            bool swapButton = false;
+
             while (_p1.Stack > 0 && _p2.Stack > 0)
             {
-                var hand = _handFactory.CreateHand(_p1, _p2);
+                if (swapButton)
+                {
+                    var h = _handFactory.CreateHand(_p1, _p2);
+                }
+                else
+                {
+                   var h = _handFactory.CreateHand(_p2, _p1);
+                }
+
+                swapButton = !swapButton;
             }
 
             if (_p1.Stack > 0)
