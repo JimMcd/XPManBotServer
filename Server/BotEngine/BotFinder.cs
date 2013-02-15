@@ -15,7 +15,7 @@ namespace BotEngine
 
         public List<string> Find()
         {
-            var bots = Directory.GetDirectories(_locationToLook).ToList().ConvertAll(b => b.Replace(_locationToLook, ""));
+            var bots = Directory.GetDirectories(_locationToLook).ToList().ConvertAll(b => b.Replace(_locationToLook, "").Substring(1));
             return bots;
         }
     }

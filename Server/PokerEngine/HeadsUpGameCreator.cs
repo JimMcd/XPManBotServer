@@ -10,7 +10,13 @@ namespace PokerEngine
     {
         public IAmAHeadsUpGame Create(IAmABot playerOne, IAmABot playerTwo)
         {
-            return new OneCardPokerGame(new BotMessagenger(playerOne), new BotMessagenger(playerTwo), 10, new HandCreator());
+            var p1 = new BotMessagenger(playerOne);
+            var p2 = new BotMessagenger(playerTwo);
+
+            p1.OpponentName(playerTwo.Name);
+            p2.OpponentName(playerOne.Name);
+
+            return new OneCardPokerGame(p1, p2, 10, new HandCreator());
         }
     }
 }

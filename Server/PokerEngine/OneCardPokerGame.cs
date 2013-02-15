@@ -129,6 +129,7 @@ namespace PokerEngine
         }
 
         public string Name { get; private set; }
+
         public void ReceiveCard(string card)
         {
             _bot.SendMessage("CARD:" + card);
@@ -162,6 +163,11 @@ namespace PokerEngine
         public void SendButton()
         {
             _bot.SendMessage("BUTTON");
+        }
+
+        public void OpponentName(string name)
+        {
+            _bot.SendMessage("OPPONENT_NAME:" + name);
         }
     }
 }
