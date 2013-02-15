@@ -1,4 +1,5 @@
-﻿using BotEngine;
+﻿using System;
+using BotEngine;
 using GameEngine;
 using PokerEngine;
 
@@ -13,6 +14,7 @@ namespace Server
             var gameCreator = new HeadsUpGameCreator();
             var gameEngine = new HeadsUpGameEngine(botCreator, fixtureCreator, gameCreator);
             gameEngine.PlayAll();
+            Console.ReadLine();
         }
     }
 }

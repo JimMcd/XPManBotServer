@@ -118,12 +118,13 @@ namespace PokerEngine
             _actAfter = new PlayerWithCard(blind, deck.Next());
             _actNext = new PlayerWithCard(button, deck.Next());
 
-            PostBlinds(_actAfter);
+            PostBlinds(_actAfter, _actNext);
         }
 
-        private void PostBlinds(PlayerWithCard blind)
+        private void PostBlinds(PlayerWithCard blind, PlayerWithCard button)
         {
             blind.Player.PostBlind();
+            button.Player.SendButton();
             Bet(blind, 1);
         }
 
@@ -138,12 +139,21 @@ namespace PokerEngine
             winner.Player.ReceiveChips(_pot);
         }
 
+        private void Loses(PlayerWithCard loser)
+        {
+            loser.Player.ReceiveChips(0);
+        }
+
         private void ShowDown(PlayerWithCard p1, PlayerWithCard p2)
         {
-            if (Card.Rank(p1.Card) > Card.Rank(p2.Card))
+            if (Card.Rank(p1.Card) > Card.Rank(p2.Card)) {
                 Wins(p1);
-            else
+                Loses(p2);
+            }
+            else {
                 Wins(p2);
+                Loses(p1);
+            }
         }
     }
 

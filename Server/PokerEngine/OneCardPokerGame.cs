@@ -121,6 +121,7 @@ namespace PokerEngine
 
         public BotMessagenger(IAmABot bot)
         {
+            Name = bot.Name;
             _bot = bot;
         }
 

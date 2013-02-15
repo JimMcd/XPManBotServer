@@ -79,6 +79,8 @@ namespace GameEngine.Tests
 
     public class FakeBot : IAmABot
     {
+        public string Name { get; private set; }
+
         public void SendMessage(string message)
         {
             
