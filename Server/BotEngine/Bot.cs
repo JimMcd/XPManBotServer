@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 using GameEngine.HeadsUp;
 
 namespace BotEngine
@@ -43,20 +44,34 @@ namespace BotEngine
             var result = "";
             var validResponses = new List<string> {"FOLD", "CALL", "BET"};
 
-            while (!validResponses.Contains(result))
+            var readCount = 0;
+            while (!validResponses.Contains(result) && readCount < 100)
             {
-                _input.WriteLine("PING");
                 result = _output.ReadLine();
                 Console.WriteLine("Got {0} from: {1}", result, Name);
+                readCount++;
             }
+            if (readCount == 100)
+                return "FOLD";
             return result;
         }
 
         public void SendGameOver()
         {
+            SendMessage("GAME_OVER");
             _input.Close();
             _output.Close();
+
+            var processes = Process.GetProcesses();
+            foreach(var process in processes)
+            {
+                if (process.ProcessName.ToLower().Contains(Name.ToLower()))
+                    process.Kill();
+            }
+
             _process.Kill();
+            _process.Close();
+            _process.Dispose();
         }
     }
 }

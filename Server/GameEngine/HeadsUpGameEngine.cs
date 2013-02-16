@@ -15,7 +15,7 @@ namespace GameEngine
             _gameCreator = gameCreator;
         }
 
-        public void PlayAll()
+        public void PlayAll(ITrackScores scoreBoard)
         {
             var fixtures = _fixtureCreator.GetFixtures();
 
@@ -27,6 +27,7 @@ namespace GameEngine
                 game.Play();
                 botOne.SendGameOver();
                 botTwo.SendGameOver();
+                game.ReportWinner(scoreBoard);
             }
 
         }

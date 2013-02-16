@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace GameEngine.Tests
 {
     [TestFixture]
-    public class HeadsUpGameEngineTests : ICreateFixtures, ICreateBots, ICreateHeadsUpGames
+    public class HeadsUpGameEngineTests : ICreateFixtures, ICreateBots, ICreateHeadsUpGames, ITrackScores
     {
         private bool _getFixturesCalled;
         private int _botsCreated;
@@ -18,7 +18,7 @@ namespace GameEngine.Tests
         public void gets_fixtures()
         {
             var engine = new HeadsUpGameEngine(this, this, this);
-            engine.PlayAll();
+            engine.PlayAll(this);
             Assert.True(_getFixturesCalled);
         }
 
@@ -26,7 +26,7 @@ namespace GameEngine.Tests
         public void creates_bots()
         {
             var engine = new HeadsUpGameEngine(this, this, this);
-            engine.PlayAll();
+            engine.PlayAll(this);
             Assert.That(_botsCreated, Is.EqualTo(2));
         }
 
@@ -34,7 +34,7 @@ namespace GameEngine.Tests
         public void plays_game()
         {
             var engine = new HeadsUpGameEngine(this, this, this);
-            engine.PlayAll();
+            engine.PlayAll(this);
             Assert.True(_game.GamePlayed);
         }
 
@@ -56,6 +56,11 @@ namespace GameEngine.Tests
             _game = new FakeGame();
             return _game;
         }
+
+        public void ReportWinner(string winnerName)
+        {
+            
+        }
     }
 
     public class FakeGame : IAmAHeadsUpGame
@@ -74,6 +79,10 @@ namespace GameEngine.Tests
         public void Play()
         {
             GamePlayed = true;
+        }
+
+        public void ReportWinner(ITrackScores scoreBoard)
+        {
         }
     }
 

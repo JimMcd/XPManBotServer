@@ -8,5 +8,6 @@ namespace GameEngine.HeadsUp
     public interface IAmAHeadsUpGame
     {
         void Play();
+        void ReportWinner(ITrackScores scoreBoard);
     }
 }

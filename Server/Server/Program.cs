@@ -9,12 +9,18 @@ namespace Server
     {
         public static void Main(string[] args)
         {
-            var botCreator = new BotCreator();
-            var fixtureCreator = new RoundRobinFixtures(new BotFinder(@"c:\bots"));
-            var gameCreator = new HeadsUpGameCreator();
-            var gameEngine = new HeadsUpGameEngine(botCreator, fixtureCreator, gameCreator);
-            gameEngine.PlayAll();
-            Console.ReadLine();
+            var scoreBoard = new Scoreboard();
+            while (true) {
+                var botCreator = new BotCreator();
+                var fixtureCreator = new RoundRobinFixtures(new BotFinder(@"c:\bots"));
+                var gameCreator = new HeadsUpGameCreator();
+                var gameEngine = new HeadsUpGameEngine(botCreator, fixtureCreator, gameCreator);
+                
+                gameEngine.PlayAll(scoreBoard);
+
+                scoreBoard.PrintScores();
+                Console.ReadLine();
+            }
         }
     }
 }
